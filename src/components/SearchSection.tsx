@@ -13,7 +13,7 @@ const SearchSection = () => {
   const fileInputRef = useRef(null);
 
   const handleImageSearch = async (file) => {
-    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'avif'];
     const fileExtension = file.name.split('.').pop().toLowerCase();
 
     if (!allowedExtensions.includes(fileExtension)) {
