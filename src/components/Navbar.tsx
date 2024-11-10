@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { useEffect, useState, useRef } from "react";
 import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu";
@@ -17,10 +19,10 @@ function Navbar({ className }: { className?: string }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const router = useRouter();
   const [bgColor, setBgColor] = useState("transparent");
-  const profileRef = useRef(null);
+  const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: { target: any; }) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setIsProfileOpen(false);
       }
@@ -35,9 +37,12 @@ function Navbar({ className }: { className?: string }) {
       try {
         const session = await account.getSession('current');
         if (session) {
+          const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '';
+          const collectionId = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID || '';
+          
           const userDocs = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-            process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID,
+            databaseId,
+            collectionId,
             [Query.equal('userId', session.userId)]
           );
 
@@ -83,17 +88,6 @@ function Navbar({ className }: { className?: string }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
-
-  const NavLink = ({ href, children }) => (
-    <div className="relative group py-2">
-      <Link href={href} className="inline-block w-full">
-        <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
-          {children}
-        </span>
-        <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-      </Link>
-    </div>
-  );
 
   return (
     <div 
