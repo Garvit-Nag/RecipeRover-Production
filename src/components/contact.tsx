@@ -24,7 +24,7 @@ const ContactPage = () => {
           from_name: formData.name,
           from_email: formData.email,
           message: formData.message,
-          to_email: 'garvitcpp@gmail.com, gurmeharsinghv@gmail.com'
+          to_email: ['garvitcpp@gmail.com', 'gurmeharsinghv@gmail.com']
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY // Replace with your EmailJS public key
       );
