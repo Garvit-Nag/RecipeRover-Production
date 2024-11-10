@@ -1,10 +1,11 @@
+/* eslint-disable react/no-children-prop */
 'use client';
 
 import { useState, useEffect } from 'react';
 import { account, createUserDocument, databases } from '@/lib/appwrite';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { ID } from 'appwrite';
+import { ID, OAuthProvider } from 'appwrite';
 import { BackgroundLines } from '@/components/ui/background-lines';
 import SecondaryLoader from '@/components/ui/SecondaryLoader';
 
@@ -34,7 +35,7 @@ const AuthPage = () => {
     const handleGoogleLogin = async () => {
         try {
             await account.createOAuth2Session(
-                'google',
+                'google' as OAuthProvider,
                 process.env.NEXT_PUBLIC_AUTH_CALLBACK_URL!,
                 process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL!
             );
@@ -47,7 +48,7 @@ const AuthPage = () => {
     const handleDiscordLogin = async () => {
         try {
             await account.createOAuth2Session(
-                'discord',
+                'discord'as OAuthProvider,
                 process.env.NEXT_PUBLIC_AUTH_CALLBACK_URL!,
                 process.env.NEXT_PUBLIC_APP_URL!
             );
@@ -69,7 +70,7 @@ const AuthPage = () => {
         <div className="relative min-h-screen flex items-center justify-center bg-black">
             {/* Background with lines */}
             <div className="absolute inset-0 bg-black">
-                <BackgroundLines />
+                <BackgroundLines children={undefined} />
             </div>
             
             {/* Glowing gradient effect */}
