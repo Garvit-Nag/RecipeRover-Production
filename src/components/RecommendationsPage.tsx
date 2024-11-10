@@ -338,7 +338,7 @@ const RecommendationsPage: React.FC = () => {
         )}
       </Dialog>
       <div className="mt-12 text-center">
-        <Button onClick={() => window.location.href = "/"}>
+        <Button onClick={() => window.location.href = "/form"}>
           Back to Recommendation Form
         </Button>
       </div>
