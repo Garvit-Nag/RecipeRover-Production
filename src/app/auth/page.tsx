@@ -9,8 +9,6 @@ import { ID, OAuthProvider } from 'appwrite';
 import { BackgroundLines } from '@/components/ui/background-lines';
 import SecondaryLoader from '@/components/ui/SecondaryLoader';
 
-export const DEFAULT_AVATAR = 'https://cloud.appwrite.io/v1/storage/buckets/67276e2d002916c92b37/files/67276e7d0035c9e0947a/view?project=67269999000b28be9b29';
-
 const AuthPage = () => {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
