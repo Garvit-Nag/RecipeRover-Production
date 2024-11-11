@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { useEffect, useState, useRef } from "react";
 import { HoveredLink, Menu, MenuItem } from "./ui/navbar-menu";
@@ -17,10 +19,10 @@ function Navbar({ className }: { className?: string }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const router = useRouter();
   const [bgColor, setBgColor] = useState("transparent");
-  const profileRef = useRef(null);
+  const profileRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: { target: any; }) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setIsProfileOpen(false);
       }
@@ -33,29 +35,41 @@ function Navbar({ className }: { className?: string }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const session = await account.getSession('current');
-        if (session) {
-          const userDocs = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-            process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID,
-            [Query.equal('userId', session.userId)]
-          );
-
-          if (userDocs.documents.length > 0) {
-            const user = userDocs.documents[0];
-            setCurrentUser({
-              name: user.name,
-              email: user.email,
-              avatar: user.avatar
-            });
+        // First check if there's an active session
+        const promise = account.get();
+        promise.then(
+          async (response) => {
+            // User is logged in, fetch additional data
+            const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '';
+            const collectionId = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID || '';
+            
+            const userDocs = await databases.listDocuments(
+              databaseId,
+              collectionId,
+              [Query.equal('userId', response.$id)]
+            );
+  
+            if (userDocs.documents.length > 0) {
+              const user = userDocs.documents[0];
+              setCurrentUser({
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar
+              });
+            }
+          },
+          (error) => {
+            // User is not logged in, just set currentUser to null
+            setCurrentUser(null);
           }
-        }
+        );
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        // Handle any other errors
+        console.error('Error checking authentication status:', error);
         setCurrentUser(null);
       }
     };
-
+  
     fetchUserData();
   }, []);
 
@@ -84,17 +98,6 @@ function Navbar({ className }: { className?: string }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const NavLink = ({ href, children }) => (
-    <div className="relative group py-2">
-      <Link href={href} className="inline-block w-full">
-        <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
-          {children}
-        </span>
-        <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-      </Link>
-    </div>
-  );
-
   return (
     <div 
       className={cn(
@@ -106,9 +109,15 @@ function Navbar({ className }: { className?: string }) {
     >
       <Menu setActive={setActive}>
         <div className="flex justify-between items-center w-full px-8 py-4">
-          <Link href="/">
-            <img src="/logo.png" alt="Logo" className="h-12 transition-transform duration-200 hover:scale-105" />
-          </Link>
+        <div className="md:block flex-1 md:flex-initial">
+            <Link href="/" className="block md:inline-block w-full md:w-auto text-center">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="h-12 transition-transform duration-200 hover:scale-105 mx-auto md:mx-0" 
+              />
+            </Link>
+          </div>
 
           <div className="hidden md:flex items-center space-x-14">
             <div className="group">
@@ -264,7 +273,7 @@ function Navbar({ className }: { className?: string }) {
             </Link>
           </div>
 
-          {currentUser && (
+          {currentUser ? (
             <>
               <div className="border-t border-white/10"></div>
               <div className="px-8 py-4 space-y-4 flex flex-col items-center">
@@ -283,6 +292,18 @@ function Navbar({ className }: { className?: string }) {
                   </span>
                   <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                 </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="border-t border-white/10"></div>
+              <div className="px-8 py-4 space-y-4 flex flex-col items-center">
+                <Link href="/auth" className="relative group py-2 w-full text-center">
+                  <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                    Login
+                  </span>
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                </Link>
               </div>
             </>
           )}
