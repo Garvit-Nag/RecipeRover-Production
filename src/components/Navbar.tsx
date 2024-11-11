@@ -267,27 +267,27 @@ function Navbar({ className }: { className?: string }) {
                 )}
 
                 {/* Navigation Links - Modified container */}
-                <nav className="flex-1 flex flex-col justify-center mx-6">
-                  <div className="space-y-6 text-center">
-                    <Link href="/" className="relative group py-2 w-full mx-4">
+                <nav className="flex-1 flex flex-col justify-center">
+                  <div className="mt-28 space-y-1 text-center">
+                    <Link href="/" className="relative group py-2 w-full block">
                       <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                         Home
                       </span>
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                     </Link>
-                    <Link href="/about" className="relative group py-2 w-full mx-4">
+                    <Link href="/about" className="relative group py-2 w-full block">
                       <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                         About
                       </span>
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                     </Link>
-                    <Link href="/form" className="relative group py-2 w-full mx-4">
+                    <Link href="/form" className="relative group py-2 w-full block">
                       <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                         Search
                       </span>
                       <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                     </Link>
-                    <Link href="/contact" className="relative group py-2 w-full mx-4">
+                    <Link href="/contact" className="relative group py-2 w-full block">
                       <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                         Contact Us
                       </span>
@@ -296,10 +296,10 @@ function Navbar({ className }: { className?: string }) {
                   </div>
 
                   {/* Auth Section */}
-                  <div className="mt-6 pt-6 border-t border-white/10 px-6">
+                  <div className="mt-6 pt-6 border-t border-white/20 px-6">
                     {currentUser ? (
                       <div className="space-y-6 text-center">
-                        <Link href="/dashboard" className="relative group py-2 w-full">
+                        <Link href="/dashboard" className="relative group pt-1 w-full block">
                           <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                             Dashboard
                           </span>
@@ -307,7 +307,7 @@ function Navbar({ className }: { className?: string }) {
                         </Link>
                         <button
                           onClick={handleLogout}
-                          className="relative group py-2 w-full text-center"
+                          className="relative group py-0 w-full text-center"
                         >
                           <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                             Sign out
