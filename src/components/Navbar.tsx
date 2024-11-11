@@ -96,35 +96,6 @@ function Navbar({ className }: { className?: string }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  const NavLink = ({ href, children }) => (
-    <div className="relative group py-2">
-      <Link href={href} className="inline-block w-full">
-        <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
-          {children}
-        </span>
-        <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-      </Link>
-    </div>
-  );
-
-  const navItems2 = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/form", label: "Search" },
-    { href: "/contact", label: "Contact Us" }
-  ];
-
-  const navItems = [
-    { href: "/", label: "" },
-    { href: "/", label: "" },
-    { href: "/", label: "" },
-    { href: "/", label: "" },
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/form", label: "Search" },
-    { href: "/contact", label: "Contact Us" }
-  ];
-
   return (
     <>
       {isOpen && (
@@ -154,17 +125,36 @@ function Navbar({ className }: { className?: string }) {
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8 xl:space-x-14">
-              {navItems2.map((item) => (
-                <NavLink key={item.href} href={item.href} onClick={() => {}}>
-                  {item.label}
-                </NavLink>
-              ))}
+              <Link href="/" className="relative group py-2">
+                <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
+                  Home
+                </span>
+                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+              </Link>
+              <Link href="/about" className="relative group py-2">
+                <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
+                  About
+                </span>
+                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+              </Link>
+              <Link href="/form" className="relative group py-2">
+                <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
+                  Search
+                </span>
+                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+              </Link>
+              <Link href="/contact" className="relative group py-2">
+                <span className="text-white transition-transform duration-200 group-hover:-translate-y-1">
+                  Contact Us
+                </span>
+                <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+              </Link>
             </div>
 
             {/* Desktop Profile Menu */}
             <div className="hidden lg:flex items-center" ref={profileRef}>
               {currentUser ? (
-                <div className="relative">
+                <div className="relative profile-menu">
                   <button
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
                     className="flex items-center space-x-3 focus:outline-none transition-transform duration-200 hover:scale-105"
@@ -186,7 +176,7 @@ function Navbar({ className }: { className?: string }) {
                   </button>
 
                   {isProfileOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg py-1 border border-white/10">
+                    <div className="absolute right-0 mt-2 w-48 bg-black/80 backdrop-blur-sm rounded-lg shadow-lg py-1 border border-white/10">
                       <Link href="/dashboard">
                         <div className="relative group px-4 py-2 hover:bg-white/10">
                           <span className="block text-white transition-transform duration-200 group-hover:-translate-y-1">
@@ -255,64 +245,83 @@ function Navbar({ className }: { className?: string }) {
               </div>
 
               {/* Modified Content container */}
-              <div className="flex-1 flex flex-col justify-center min-h-0 px-6">
+              <div className="flex-1 flex flex-col justify-center min-h-0 px-6 py-12">
                 {/* User Profile Section */}
                 {currentUser && (
                   <div className="py-4 flex items-center space-x-4 border-b border-white/10">
-                    {/* ... (profile section remains the same) */}
                     {currentUser.avatar ? (
-                      <Image
-                        src={currentUser.avatar}
-                        alt="Avatar"
-                        width={48}
-                        height={48}
-                        className="rounded-full border-2 border-white"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white text-xl">
-                        {currentUser.name[0].toUpperCase()}
-                      </div>
-                    )}
-                    <span className="text-white font-medium">{currentUser.name}</span>
+                    <Image
+                      src={currentUser.avatar}
+                      alt="Avatar"
+                      width={48}
+                      height={48}
+                      className="rounded-full border-2 border-white"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white text-xl">
+                      {currentUser.name[0].toUpperCase()}
+                    </div>
+                  )}
+                  <span className="text-white font-medium">{currentUser.name}</span>
                   </div>
                 )}
 
                 {/* Navigation Links - Modified container */}
-                <nav className="flex-1 flex flex-col justify-center -mx-6">
-                  <div className="space-y-6 text-center">
-                    {navItems.map((item) => (
-                      <div key={item.href} className="px-6">
-                        <NavLink 
-                          href={item.href}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {item.label}
-                        </NavLink>
-                      </div>
-                    ))}
+                <nav className="flex-1 flex flex-col justify-center">
+                  <div className="mt-28 space-y-1 text-center">
+                    <Link href="/" className="relative group py-2 w-full block">
+                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                        Home
+                      </span>
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                    </Link>
+                    <Link href="/about" className="relative group py-2 w-full block">
+                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                        About
+                      </span>
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                    </Link>
+                    <Link href="/form" className="relative group py-2 w-full block">
+                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                        Search
+                      </span>
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                    </Link>
+                    <Link href="/contact" className="relative group py-2 w-full block">
+                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                        Contact Us
+                      </span>
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                    </Link>
                   </div>
 
                   {/* Auth Section */}
-                  <div className="mt-6 pt-6 border-t border-white/10 px-6">
+                  <div className="mt-6 pt-6 border-t border-white/20 px-6">
                     {currentUser ? (
                       <div className="space-y-6 text-center">
-                        <NavLink href="/dashboard" onClick={() => setIsOpen(false)}>
-                          Dashboard
-                        </NavLink>
+                        <Link href="/dashboard" className="relative group pt-1 w-full block">
+                          <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                            Dashboard
+                          </span>
+                          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                        </Link>
                         <button
                           onClick={handleLogout}
-                          className="relative group py-2 text-left"
+                          className="relative group py-0 w-full text-center"
                         >
-                          <span className="text-white transition-transform duration-200">
+                          <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                             Sign out
                           </span>
                           <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                         </button>
                       </div>
                     ) : (
-                      <NavLink href="/auth" onClick={() => setIsOpen(false)}>
-                        Login
-                      </NavLink>
+                      <Link href="/auth" className="relative group py-2 w-full">
+                        <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                          Login
+                        </span>
+                        <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                      </Link>
                     )}
                   </div>
                 </nav>
