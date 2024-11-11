@@ -35,32 +35,41 @@ function Navbar({ className }: { className?: string }) {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const session = await account.getSession('current');
-        if (session) {
-          const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '';
-          const collectionId = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID || '';
-          
-          const userDocs = await databases.listDocuments(
-            databaseId,
-            collectionId,
-            [Query.equal('userId', session.userId)]
-          );
-
-          if (userDocs.documents.length > 0) {
-            const user = userDocs.documents[0];
-            setCurrentUser({
-              name: user.name,
-              email: user.email,
-              avatar: user.avatar
-            });
+        // First check if there's an active session
+        const promise = account.get();
+        promise.then(
+          async (response) => {
+            // User is logged in, fetch additional data
+            const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || '';
+            const collectionId = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID || '';
+            
+            const userDocs = await databases.listDocuments(
+              databaseId,
+              collectionId,
+              [Query.equal('userId', response.$id)]
+            );
+  
+            if (userDocs.documents.length > 0) {
+              const user = userDocs.documents[0];
+              setCurrentUser({
+                name: user.name,
+                email: user.email,
+                avatar: user.avatar
+              });
+            }
+          },
+          (error) => {
+            // User is not logged in, just set currentUser to null
+            setCurrentUser(null);
           }
-        }
+        );
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        // Handle any other errors
+        console.error('Error checking authentication status:', error);
         setCurrentUser(null);
       }
     };
-
+  
     fetchUserData();
   }, []);
 
