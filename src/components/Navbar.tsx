@@ -316,7 +316,7 @@ function Navbar({ className }: { className?: string }) {
                         </button>
                       </div>
                     ) : (
-                      <Link href="/auth" className="relative group py-2 w-full">
+                      <Link href="/auth" className="relative group py-2 w-full flex items-center justify-center">
                         <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
                           Login
                         </span>
