@@ -109,9 +109,15 @@ function Navbar({ className }: { className?: string }) {
     >
       <Menu setActive={setActive}>
         <div className="flex justify-between items-center w-full px-8 py-4">
-          <Link href="/">
-            <img src="/logo.png" alt="Logo" className="h-12 transition-transform duration-200 hover:scale-105" />
-          </Link>
+        <div className="md:block flex-1 md:flex-initial">
+            <Link href="/" className="block md:inline-block w-full md:w-auto text-center">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="h-12 transition-transform duration-200 hover:scale-105 mx-auto md:mx-0" 
+              />
+            </Link>
+          </div>
 
           <div className="hidden md:flex items-center space-x-14">
             <div className="group">
