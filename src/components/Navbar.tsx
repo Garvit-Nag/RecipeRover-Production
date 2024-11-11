@@ -258,7 +258,7 @@ function Navbar({ className }: { className?: string }) {
             </Link>
           </div>
 
-          {currentUser && (
+          {currentUser ? (
             <>
               <div className="border-t border-white/10"></div>
               <div className="px-8 py-4 space-y-4 flex flex-col items-center">
@@ -277,6 +277,18 @@ function Navbar({ className }: { className?: string }) {
                   </span>
                   <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                 </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="border-t border-white/10"></div>
+              <div className="px-8 py-4 space-y-4 flex flex-col items-center">
+                <Link href="/auth" className="relative group py-2 w-full text-center">
+                  <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                    Login
+                  </span>
+                  <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                </Link>
               </div>
             </>
           )}
