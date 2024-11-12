@@ -102,7 +102,7 @@ const SearchSection: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-[#2a2a2a] text-white px-4 py-3 pr-24 rounded-lg border border-gray-700 focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200 animate__animated animate__fadeInDown animate__faster"
-              placeholder="Search recipes..."
+              placeholder="Eg: Something I can make with onions, garlic ... etc"
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
               <input
