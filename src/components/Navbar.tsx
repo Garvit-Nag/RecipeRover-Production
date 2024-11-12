@@ -225,7 +225,7 @@ function Navbar({ className }: { className?: string }) {
           {/* Modified Mobile Menu */}
           <div 
             className={cn(
-              "lg:hidden fixed inset-0 z-50",
+              "lg:hidden fixed inset-0 z-50 h-screen",
               "transition-transform duration-300 ease-in-out",
               isOpen ? "translate-x-0" : "translate-x-full"
             )}
@@ -245,86 +245,84 @@ function Navbar({ className }: { className?: string }) {
               </div>
 
               {/* Modified Content container */}
-              <div className="flex-1 flex flex-col justify-center min-h-0 px-6 py-12">
+              <div className="flex-1 flex flex-col items-center justify-center min-h-0 px-6 py-12">
                 {/* User Profile Section */}
                 {currentUser && (
-                  <div className="py-4 flex items-center space-x-4 border-b border-white/10">
+                  <div className="py-4 flex items-center space-x-4 border-b border-white/30">
                     {currentUser.avatar ? (
-                    <Image
-                      src={currentUser.avatar}
-                      alt="Avatar"
-                      width={48}
-                      height={48}
-                      className="rounded-full border-2 border-white"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white text-xl">
-                      {currentUser.name[0].toUpperCase()}
-                    </div>
-                  )}
-                  <span className="text-white font-medium">{currentUser.name}</span>
+                      <Image
+                        src={currentUser.avatar}
+                        alt="Avatar"
+                        width={48}
+                        height={48}
+                        className="rounded-full border-2 border-white"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white border-2 border-white text-xl">
+                        {currentUser.name[0].toUpperCase()}
+                      </div>
+                    )}
+                    <span className="text-white font-medium">{currentUser.name}</span>
                   </div>
                 )}
 
                 {/* Navigation Links - Modified container */}
-                <nav className="flex-1 flex flex-col justify-center">
-                  <div className="mt-28 space-y-1 text-center">
-                    <Link href="/" className="relative group py-2 w-full block">
-                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                        Home
-                      </span>
-                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                    </Link>
-                    <Link href="/about" className="relative group py-2 w-full block">
-                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                        About
-                      </span>
-                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                    </Link>
-                    <Link href="/form" className="relative group py-2 w-full block">
-                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                        Search
-                      </span>
-                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                    </Link>
-                    <Link href="/contact" className="relative group py-2 w-full block">
-                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                        Contact Us
-                      </span>
-                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                    </Link>
-                  </div>
+                <nav className="flex-1 flex flex-col items-center justify-center space-y-6">
+                  <Link href="/" className="relative group text-center">
+                    <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                      Home
+                    </span>
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                  </Link>
+                  <Link href="/about" className="relative group text-center">
+                    <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                      About
+                    </span>
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                  </Link>
+                  <Link href="/form" className="relative group text-center">
+                    <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                      Search
+                    </span>
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                  </Link>
+                  <Link href="/contact" className="relative group text-center">
+                    <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                      Contact Us
+                    </span>
+                    <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                  </Link>
+                </nav>
 
-                  {/* Auth Section */}
-                  <div className="mt-6 pt-6 border-t border-white/20 px-6">
-                    {currentUser ? (
-                      <div className="space-y-6 text-center">
-                        <Link href="/dashboard" className="relative group pt-1 w-full block">
-                          <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                            Dashboard
-                          </span>
-                          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="relative group py-0 w-full text-center"
-                        >
-                          <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                            Sign out
-                          </span>
-                          <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
-                        </button>
-                      </div>
-                    ) : (
-                      <Link href="/auth" className="relative group py-2 w-full flex items-center justify-center">
+                {/* Auth Section */}
+                <div className="mt-0 mb-60 pt-6 border-t border-white/20 px-6">
+                  {currentUser ? (
+                    <div className="space-y-6 text-center">
+                      <Link href="/dashboard" className="relative group pt-1 w-full block">
                         <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
-                          Login
+                          Dashboard
                         </span>
                         <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
                       </Link>
-                    )}
-                  </div>
-                </nav>
+                      <button
+                        onClick={handleLogout}
+                        className="relative group py-0 w-full text-center"
+                      >
+                        <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                          Sign out
+                        </span>
+                        <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                      </button>
+                    </div>
+                  ) : (
+                    <Link href="/auth" className="relative group py-0 w-full flex items-center justify-center">
+                      <span className="inline-block text-white transition-transform duration-200 group-hover:-translate-y-1">
+                        Login
+                      </span>
+                      <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-white/50 transition-all duration-300 origin-center group-hover:w-full group-hover:left-0"></span>
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>
