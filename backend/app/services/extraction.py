@@ -269,6 +269,7 @@ From the given text, identify:
 - **category**: The main name or type of the recipe (like "chicken", "ice cream"). 
 - **calories**: Number of calories, if mentioned.
 - **time**: Time to cook, in minutes.
+- **ingredients**: List of ingredients mentioned in the text. Include basic cooking ingredients even if not explicitly mentioned (e.g., if it's a cake, include "flour", "sugar" as basic ingredients).
 - **keywords**: Important words related to the recipe. If the category is not common (like "noodles" or "biryani"), include relevant characteristics (e.g., "asian", "main course", "stir fry", "quick meal", "wheat based", "high protein", etc).
 - **keywords_name**: List of individual words from the category/name. For uncommon categories, include descriptive terms and related categories (e.g., for "noodles": ["asian", "pasta", "wheat", "main dish"]).
 
@@ -279,6 +280,7 @@ Output: {{
     "category": "",
     "calories": "",
     "time": "",
+    "ingredients": ["noodles", "oil", "salt"],
     "keywords": ["asian", "stir fry", "wheat based", "quick meal", "main course", "pasta", "noodles"],
     "keywords_name": ["asian", "pasta", "main dish", "wheat"]
 }}
@@ -289,38 +291,20 @@ Output: {{
     "category": "",
     "calories": "",
     "time": "",
+    "ingredients": ["rice", "spices", "oil", "onions", "garlic"],
     "keywords": ["rice", "indian", "spicy", "main course", "one dish meal", "biryani"],
     "keywords_name": ["rice", "indian", "spicy"]
 }}
 
 ---
-Input: "sushi"
+Input: "I wish to cook chicken soup which contains around 200 calories within 30 mins"
 Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["japanese", "rice", "seafood", "whitefish", "snack", "main course", "sushi"],
-    "keywords_name": ["japanese", "seafood", "rice"]
-}}
-
----
-Input: "vegetable curry"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["vegan", "vegetarian", "spicy", "main course", "curry", "indian"],
-    "keywords_name": ["indian", "vegetarian", "spicy"]
-}}
-         
----
-Input: "quinoa salad"
-Output: {{
-    "category": "salad dressings",
-    "calories": "",
-    "time": "",
-    "keywords": ["healthy", "salad", "gluten-free", "fiber", "low calorie", "vegan"],
-    "keywords_name": ["healthy", "salad", "vegan"]
+    "category": "chicken",
+    "calories": "200",
+    "time": "30",
+    "ingredients": ["chicken", "water", "vegetables", "salt", "pepper"],
+    "keywords": ["chicken", "soup", "200 calories", "30 mins"],
+    "keywords_name": ["chicken", "soup"]
 }}
 
 ---
@@ -329,208 +313,20 @@ Output: {{
     "category": "beef organ meats",
     "calories": "",
     "time": "",
+    "ingredients": ["beef", "tortillas", "lettuce", "tomatoes", "cheese", "onions"],
     "keywords": ["mexican", "beef", "spicy", "snack", "tortilla", "street food"],
     "keywords_name": ["mexican", "beef", "snack"]
 }}
 
 ---
-Input: "caesar salad"
+Input: "chocolate cake with milk and sugar"
 Output: {{
-    "category": "salad dressings",
+    "category": "dessert",
     "calories": "",
     "time": "",
-    "keywords": ["salad", "appetizer", "healthy", "vegetables", "parmesan", "croutons"],
-    "keywords_name": ["salad", "appetizer", "healthy"]
-}}
-
-
----
-Input: "smoothie bowl"
-Output: {{
-    "category": "smoothies",
-    "calories": "",
-    "time": "",
-    "keywords": ["breakfast", "healthy", "fruits", "smoothies", "vegan", "fiber"],
-    "keywords_name": ["breakfast", "healthy", "fruits"]
-}}
-
-Input: "spaghetti bolognese"
-Output: {{
-    "category": "spaghetti",
-    "calories": "",
-    "time": "",
-    "keywords": ["italian", "pasta", "meat", "tomato", "main course", "hearty"],
-    "keywords_name": ["italian", "pasta", "meat"]
-}}
-         
----
-Input: "I wish to cook chicken soup which contains around 200 calories within 30 mins"
-Output: {{
-    "category": "chicken",
-    "calories": "200",
-    "time": "30",
-    "keywords": ["chicken", "soup", "200 calories", "30 mins"],
-    "keywords_name": ["chicken", "soup"]
-}}
-
----
-Input: "Quick pasta recipe with 500 calories, ready in 20 mins"
-Output: {{
-    "category": "pasta shells",
-    "calories": "500",
-    "time": "20",
-    "keywords": ["pasta shells", "500 calories", "20 mins"],
-    "keywords_name": ["pasta shells"]
-}}
-
----
-Input: "uh i wish to cook something which contains protein"
-Output: {{
-    "category": "low protein",
-    "calories": "",
-    "time": "",
-    "keywords": ["low protein", "high protein", "protein"],
-    "keywords_name": ["low protein"]
-}}
-
----
-Input: "can you suggest something with low calories"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["low calories"],
-    "keywords_name": ["low", "calories"]
-}}
-
----
-Input: "looking for a vegetarian recipe"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["vegetarian", "vegan"],
-    "keywords_name": ["vegetarian"]
-}}
-
----
-Input: "need something gluten free"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["gluten free"],
-    "keywords_name": ["gluten", "free"]
-}}
-
----
-Input: "want to make something dairy free"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["dairy free", "vegan"],
-    "keywords_name": ["dairy", "free"]
-}}
-
----
-Input: "what can i cook for dinner"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["dinner", "vegan"],
-    "keywords_name": [""]
-}}
-
----
-Input: "what can i cook for breakfast"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["breakfast", "vegan"],
-    "keywords_name": [""]
-}}
-
----
-Input: "what can i cook for lunch"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["lunch", "quick meal", "vegan"],
-    "keywords_name": [""]
-}}
-         
----
-Input: "something with low carbs"
-Output: {{
-    "category": "very low carbs",
-    "calories": "",
-    "time": "",
-    "keywords": ["very low carbs", "low carbs", "carbs"],
-    "keywords_name": ["low", "carbs"]
-}}
-         
----
-Input: "i wish to cook something in 30 minutes"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "30",
-    "keywords": ["30 minutes", "quick meal"],
-    "keywords_name": [""]
-}}
-
----
-Input: "I wish to make fish and stew"
-Output: {{
-    "category": "stew",
-    "calories": "",
-    "time": "",
-    "keywords": ["fish", "stew", "high protein"],
-    "keywords_name": ["fish", "stew"]
-}}
-
----
-Input: "I wish to make fish and stew"
-Output: {{
-    "category": "catfish",
-    "calories": "",
-    "time": "",
-    "keywords": ["fish", "stew", "high protein"],
-    "keywords_name": ["fish", "stew"]
-}}
-
----
-Input: "I wish to make fish and stew"
-Output: {{
-    "category": "whitefish",
-    "calories": "",
-    "time": "",
-    "keywords": ["fish", "stew", "high protein"],
-    "keywords_name": ["fish", "stew"]
-}}
-
----
-Input: "I wish to make fish and stew"
-Output: {{
-    "category": "crawfish",
-    "calories": "",
-    "time": "",
-    "keywords": ["fish", "stew", "high protein"],
-    "keywords_name": ["fish", "stew"]
-}} 
-               
----
-Input: "give some recipes involving almonds or dry fruits"
-Output: {{
-    "category": "",
-    "calories": "",
-    "time": "",
-    "keywords": ["almonds", "dry fruits"],
-    "keywords_name": ["almonds", "dry fruits"]
+    "ingredients": ["chocolate", "milk", "sugar", "flour", "eggs", "butter"],
+    "keywords": ["dessert", "baking", "sweet", "cake"],
+    "keywords_name": ["dessert", "cake", "chocolate"]
 }}
 
 ---
@@ -539,30 +335,22 @@ Output: {{
     "category": "",
     "calories": "",
     "time": "",
+    "ingredients": ["tea", "milk", "sugar", "water"],
     "keywords": ["milk", "sugar", "water", "beverages"],
     "keywords_name": [""]
 }}
 
 ---
-Input: "chole bhature"
+Input: "I have basil, tomato and clove what can i make in 30 minutes"
 Output: {{
     "category": "",
     "calories": "",
-    "time": "",
-    "keywords": ["gluten free"],
-    "keywords_name": ["gluten", "free"]
+    "time": "30",
+    "ingredients": ["basil", "tomato", "clove"],
+    "keywords": ["quick meal", "30 minutes", "italian"],
+    "keywords_name": [""]
 }}
 
----
-Input: "something involving nuts"
-Output: {{
-    "category": "nuts",
-    "calories": "",
-    "time": "",
-    "keywords": ["nuts", "snack", "healthy", "protein", "fiber"],
-    "keywords_name": ["nuts", "snack", "healthy"]
-}}
-            
 ---
 Now process this input:
 Input: "{text}"
@@ -591,74 +379,107 @@ Output:
         matched_category = find_closest_category(original_category)
         
         if matched_category:
-            # If we found a match (exact or close), update category and keywords_name
             result["category"] = matched_category
             if original_category != matched_category:
                 result["keywords_name"] = matched_category.split()
         else:
             result["category"] = ""
-            # Add additional context-based keywords if category is empty
+            # Add additional context-based keywords and ingredients if category is empty
             if "coffee" in text.lower() or "latte" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["coffee", "beverages", "caffeinated", "hot drink"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "caffeinated", "coffee"]
-            elif "espresso" in text.lower():
-                result["keywords"] = result.get("keywords", []) + ["beverages", "caffeinated", "espresso"]
-                result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "espresso"]
+                result["ingredients"] = result.get("ingredients", []) + ["coffee beans", "water"]
+                
             elif "smoothie bowl" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "healthy", "smoothie bowl"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "smoothie bowl"]
+                result["ingredients"] = result.get("ingredients", []) + ["fruits", "yogurt", "granola"]
+                
             elif "kombucha" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverage", "fermented", "kombucha"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "kombucha"]
+                result["ingredients"] = result.get("ingredients", []) + ["tea", "sugar", "SCOBY"]
+
             elif "herbal tea" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "caffeine-free", "herbal tea"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "herbal tea"]
+                result["ingredients"] = result.get("ingredients", []) + ["herbs", "water"]
+
             elif "seaweed" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["ingredient", "seafood", "seaweed"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["seaweed"]
+                result["ingredients"] = result.get("ingredients", []) + ["seaweed"]
+
             elif "vegan cheese" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["dairy-free", "vegan", "cheese"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["vegan cheese"]
+                result["ingredients"] = result.get("ingredients", []) + ["cashews", "nutritional yeast", "coconut oil"]
+
             elif "air fryer" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["cooking method", "air fryer", "healthy"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["air fryer"]
+                result["ingredients"] = result.get("ingredients", [])  # Ingredients vary with recipe, left blank
+
             elif "instant pot" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["cooking method", "instant pot", "pressure cooker"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["instant pot"]
+                result["ingredients"] = result.get("ingredients", [])  # Ingredients vary with recipe, left blank
+
             elif "sous vide" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["cooking method", "sous vide", "precision cooking"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["sous vide"]
+                result["ingredients"] = result.get("ingredients", [])  # Ingredients vary with recipe, left blank
+
             elif "paleo" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["diet", "paleo", "low-carb"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["paleo"]
+                result["ingredients"] = result.get("ingredients", [])  # Ingredients vary with recipe, left blank
+
             elif "fodmap" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["diet", "fodmap", "digestive health"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["fodmap"]
+                result["ingredients"] = result.get("ingredients", [])  # Ingredients vary with recipe, left blank
+
             elif "cold brew" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "caffeinated", "cold coffee"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "cold brew"]
+                result["ingredients"] = result.get("ingredients", []) + ["coffee grounds", "water"]
+
             elif "matcha" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "green tea", "matcha"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "matcha"]
+                result["ingredients"] = result.get("ingredients", []) + ["matcha powder", "water", "milk"]
+
             elif "smoothie" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "healthy", "smoothie"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "smoothie"]
+                result["ingredients"] = result.get("ingredients", []) + ["fruits", "milk", "yogurt"]
+
             elif "protein shake" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverages", "high protein", "shake"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["beverages", "protein shake"]
+                result["ingredients"] = result.get("ingredients", []) + ["protein powder", "milk", "banana"]
+
             elif "oat milk" in text.lower() or "almond milk" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["dairy-free", "vegan", "plant-based milk"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["oat milk" if "oat" in text.lower() else "almond milk"]
+                result["ingredients"] = result.get("ingredients", []) + ["oats" if "oat" in text.lower() else "almonds", "water"]
+
             elif "zoodles" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["low carb", "gluten-free", "vegetable noodles", "noodles"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["zoodles", "noodles"]
+                result["ingredients"] = result.get("ingredients", []) + ["zucchini"]
+
             elif "avocado toast" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["breakfast", "healthy", "avocado"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["avocado toast"]
+                result["ingredients"] = result.get("ingredients", []) + ["avocado", "bread"]
+
             elif "golden milk" in text.lower():
                 result["keywords"] = result.get("keywords", []) + ["beverage", "turmeric", "anti-inflammatory"]
                 result["keywords_name"] = result.get("keywords_name", []) + ["golden milk"]
-            # Add other cases as needed
+                result["ingredients"] = result.get("ingredients", []) + ["turmeric", "milk", "honey", "spices"]
+            # other cases...
             
     except json.JSONDecodeError:
         result = {"error": "Failed to parse JSON", "output": output_text}
@@ -668,7 +489,12 @@ Output:
 # Example usage:
 if __name__ == '__main__':
     test_cases = [
-        # "noodles",
+        # "Something i can make with chocolate, milk and cheese",
+        # "I have basil, tomato and clove what can i make in 30 minutes",
+        # "beef stew with potatoes, carrots, and herbs",
+        # "chocolate cake with milk and sugar",
+        # "avocado smoothie with milk and ice",
+        "noodles",
         # "need a pasta recipe",
         # "looking for a chicken dish",
         # "want to make something with rice",
@@ -691,11 +517,9 @@ if __name__ == '__main__':
         # "chocolate, brownie, cake, brown sugar",
         # "avocado smoothie, avocado, milk, ice",
         # "momo, momo, sauce",
-        # "I have basil, tomato and clove what can i make in 30 minutes",
-        "basil"
     ]
     
     for test_input in test_cases:
         print(f"\nTesting: {test_input}")
         result = extract_recipe_attributes(test_input)
-        print(json.dumps(result, indent=2)) 
+        print(json.dumps(result, indent=2))

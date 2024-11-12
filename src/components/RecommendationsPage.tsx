@@ -232,11 +232,11 @@ const RecommendationsPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen pt-24 bg-gradient-to-b from-[#0f0f0f] via-[#1c1c1c] to-[#252525] p-8" style={{
+    <div className="min-h-screen pt-24 bg-gradient-to-b from-[#0f0f0f] via-[#1c1c1c] to-[#252525] p-8 overflow-x-hidden" style={{
       backgroundImage: `url('/bg.png')`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
-  }}>
+    }}>
       {(isSessionLoading || isRecommendationsLoading) ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[...Array(6)].map((_, index) => (
@@ -244,10 +244,10 @@ const RecommendationsPage: React.FC = () => {
           ))}
         </div>
       ) : recommendations.length === 0 ? (
-        <div className="text-white text-center p-10 text-2xl">No recommendations found.</div>
+        <div className="text-white text-center p-10 text-2xl">No recommendations found. Try searching through form.</div>
       ) : (
         <div className="mt-12">
-      <h1 className="text-5xl font-bold text-center mb-1 text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Recipe Recommendations</h1>
+      <h1 className="text-4xl font-bold text-center mb-1 text-white bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">Recipe Recommendations</h1>
       <div className="max-w-8xl mx-auto px-6 mt-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
           {recommendations.slice(0, 6).map((recipe) => (
