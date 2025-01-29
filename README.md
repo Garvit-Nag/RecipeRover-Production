@@ -1,6 +1,7 @@
 ![logo](https://github.com/user-attachments/assets/34190e4e-4fc1-486b-aadd-a2a95e346178)
 
 RecipeRover is an intuitive platform designed for recipe management and discovery, built as part of a Final year Project. This repository houses the production-ready codebase for the project.
+You can view the live version of the website here: [RecipeRover](https://recipe-rover-fun.vercel.app/)
 
 # 🌟 Features
 Recipe Discovery: Find recipes based on your preferences and available ingredients.
