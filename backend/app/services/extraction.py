@@ -359,7 +359,7 @@ Output:
             prompt += message["content"]
 
     # Configure the Gemini model
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     
     # Generate response
     response = model.generate_content(prompt, 
@@ -371,6 +371,13 @@ Output:
     
     # Process the response
     output_text = response.text.strip()
+    
+    # Check if output is wrapped in markdown code blocks and extract the JSON if needed
+    if output_text.strip().startswith('```') and '```' in output_text:
+        import re
+        match = re.search(r'```(?:json)?\n(.*?)\n```', output_text, re.DOTALL)
+        if match:
+            output_text = match.group(1).strip()
     
     try:
         result = json.loads(output_text)
