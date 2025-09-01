@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from difflib import SequenceMatcher
 
 load_dotenv() 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+genai.configure(api_key=os.getenv("EXTRACTION_API_KEY"))
 
 # Define categories from dataset
 RECIPE_CATEGORIES = [
@@ -272,7 +272,6 @@ From the given text, identify:
 - **ingredients**: List of ingredients mentioned in the text. Include basic cooking ingredients even if not explicitly mentioned (e.g., if it's a cake, include "flour", "sugar" as basic ingredients).
 - **keywords**: Important words related to the recipe. If the category is not common (like "noodles" or "biryani"), include relevant characteristics (e.g., "asian", "main course", "stir fry", "quick meal", "wheat based", "high protein", etc).
 - **keywords_name**: List of individual words from the category/name. For uncommon categories, include descriptive terms and related categories (e.g., for "noodles": ["asian", "pasta", "wheat", "main dish"]).
-
 Examples:
 ---
 Input: "noodles"
@@ -284,7 +283,6 @@ Output: {{
     "keywords": ["asian", "stir fry", "wheat based", "quick meal", "main course", "pasta", "noodles"],
     "keywords_name": ["asian", "pasta", "main dish", "wheat"]
 }}
-
 ---
 Input: "biryani"
 Output: {{
@@ -295,7 +293,6 @@ Output: {{
     "keywords": ["rice", "indian", "spicy", "main course", "one dish meal", "biryani"],
     "keywords_name": ["rice", "indian", "spicy"]
 }}
-
 ---
 Input: "I wish to cook chicken soup which contains around 200 calories within 30 mins"
 Output: {{
@@ -306,7 +303,6 @@ Output: {{
     "keywords": ["chicken", "soup", "200 calories", "30 mins"],
     "keywords_name": ["chicken", "soup"]
 }}
-
 ---
 Input: "beef tacos"
 Output: {{
@@ -317,7 +313,6 @@ Output: {{
     "keywords": ["mexican", "beef", "spicy", "snack", "tortilla", "street food"],
     "keywords_name": ["mexican", "beef", "snack"]
 }}
-
 ---
 Input: "chocolate cake with milk and sugar"
 Output: {{
@@ -328,7 +323,6 @@ Output: {{
     "keywords": ["dessert", "baking", "sweet", "cake"],
     "keywords_name": ["dessert", "cake", "chocolate"]
 }}
-
 ---
 Input: "tea with milk, sugar, water"
 Output: {{
@@ -339,7 +333,6 @@ Output: {{
     "keywords": ["milk", "sugar", "water", "beverages"],
     "keywords_name": [""]
 }}
-
 ---
 Input: "I have basil, tomato and clove what can i make in 30 minutes"
 Output: {{
@@ -350,7 +343,6 @@ Output: {{
     "keywords": ["quick meal", "30 minutes", "italian"],
     "keywords_name": [""]
 }}
-
 ---
 Now process this input:
 Input: "{text}"
@@ -359,18 +351,26 @@ Output:
     ]
 
     # Send the prompt to OpenAI API
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        temperature=0,
-        max_tokens=150,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-    )
+    prompt = ""
+    for message in messages:
+        if message["role"] == "system":
+            prompt += message["content"] + "\n\n"
+        else:
+            prompt += message["content"]
 
+    # Configure the Gemini model
+    model = genai.GenerativeModel('gemini-2.5-flash')
+    
+    # Generate response
+    response = model.generate_content(prompt, 
+                                     generation_config=genai.types.GenerationConfig(
+                                         temperature=0,
+                                         max_output_tokens=150,
+                                         top_p=1
+                                     ))
+    
     # Process the response
-    output_text = response['choices'][0]['message']['content'].strip()
+    output_text = response.text.strip()
     
     try:
         result = json.loads(output_text)
