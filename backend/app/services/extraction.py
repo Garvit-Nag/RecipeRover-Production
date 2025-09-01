@@ -1,4 +1,4 @@
-import openai
+import google.generativeai as genai
 import json
 from difflib import get_close_matches
 import os
