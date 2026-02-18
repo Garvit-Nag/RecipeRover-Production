@@ -12,7 +12,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Initialize the model - UPDATED MODEL NAME HERE
-model = genai.GenerativeModel('gemini-2.0')  
+model = genai.GenerativeModel('gemini-2.5-flash')  
 
 def analyze_food_image(image_content) -> str:
     """
