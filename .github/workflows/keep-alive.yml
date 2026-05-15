@@ -1,0 +1,50 @@
+name: Keep Services Alive
+
+on:
+  schedule:
+    - cron: '0 9 */3 * *'  # Every 3 days at 9:00 AM UTC
+  workflow_dispatch:        # Allow manual trigger from GitHub UI
+
+jobs:
+  ping-appwrite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Appwrite
+        run: |
+          echo "Pinging Appwrite..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET \
+            -H "X-Appwrite-Project: 67269999000b28be9b29" \
+            "https://cloud.appwrite.io/v1/health")
+          echo "Appwrite status: $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
+            echo "Appwrite is alive."
+          else
+            echo "Warning: unexpected status $STATUS"
+            exit 1
+          fi
+
+  ping-mongodb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install MongoDB driver
+        run: npm install mongodb
+
+      - name: Ping MongoDB
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          node -e "
+          const { MongoClient } = require('mongodb');
+          async function run() {
+            const client = new MongoClient(process.env.MONGODB_URI);
+            try {
+              await client.connect();
+              await client.db('admin').command({ ping: 1 });
+              console.log('MongoDB ping successful');
+            } finally {
+              await client.close();
+            }
+          }
+          run().catch(e => { console.error(e); process.exit(1); });
+          "
